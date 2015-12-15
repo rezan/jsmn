@@ -44,6 +44,8 @@ typedef struct {
 	long size;
 #ifdef JSMN_PARENT_LINKS
 	long parent;
+	long skip;
+	const char *str;
 #endif
 } jsmntok_t;
 

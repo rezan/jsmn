@@ -14,6 +14,8 @@ static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser,
 	tok->size = 0;
 #ifdef JSMN_PARENT_LINKS
 	tok->parent = -1;
+	tok->skip = 0;
+	tok->str = NULL;
 #endif
 	return tok;
 }
@@ -294,6 +296,16 @@ long jsmn_parse(jsmn_parser *parser, const char *js, size_t len,
 				return JSMN_ERROR_PART;
 			}
 		}
+#ifdef JSMN_PARENT_LINKS
+		for (i = 0; i < count; i++) {
+			tokens[i].skip = 1;
+			token = &tokens[i];
+			while(token->parent >= 0) {
+				token = &tokens[token->parent];
+				token->skip++;
+			}
+		}
+#endif
 	}
 
 	return count;
