@@ -297,7 +297,7 @@ long jsmn_parse(jsmn_parser *parser, const char *js, size_t len,
 			}
 		}
 #ifdef JSMN_PARENT_LINKS
-		for (i = 0; i < count; i++) {
+		for (i = 0; i < count && i < num_tokens; i++) {
 			tokens[i].skip = 1;
 			token = &tokens[i];
 			while(token->parent >= 0) {
