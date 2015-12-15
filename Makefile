@@ -32,10 +32,11 @@ jsondump: example/jsondump.o libjsmn.a
 	$(CC) $(LDFLAGS) $^ -o $@
 
 clean:
-	rm -f jsmn.o jsmn_test.o example/simple.o
+	rm -f jsmn.o jsmn_test.o example/simple.o example/jsondump.o
 	rm -f libjsmn.a
 	rm -f simple_example
 	rm -f jsondump
+	rm -f test/test_default test/test_links test/test_strict test/test_strict_links
 
 .PHONY: all clean test
 
