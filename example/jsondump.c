@@ -26,15 +26,15 @@ static inline void *realloc_it(void *ptrmem, size_t size) {
  */
 
 static int dump(const char *js, jsmntok_t *t, size_t count, int indent) {
-	int i, j, k;
+	long i, j, k;
 	if (count == 0) {
 		return 0;
 	}
 	if (t->type == JSMN_PRIMITIVE) {
-		printf("%.*s", t->end - t->start, js+t->start);
+		printf("%.*s", (int)t->end - (int)t->start, js+t->start);
 		return 1;
 	} else if (t->type == JSMN_STRING) {
-		printf("'%.*s'", t->end - t->start, js+t->start);
+		printf("'%.*s'", (int)t->end - (int)t->start, js+t->start);
 		return 1;
 	} else if (t->type == JSMN_OBJECT) {
 		printf("\n");
@@ -62,7 +62,7 @@ static int dump(const char *js, jsmntok_t *t, size_t count, int indent) {
 }
 
 int main() {
-	int r;
+	long r;
 	int eof_expected = 0;
 	char *js = NULL;
 	size_t jslen = 0;
@@ -86,7 +86,7 @@ int main() {
 		/* Read another chunk */
 		r = fread(buf, 1, sizeof(buf), stdin);
 		if (r < 0) {
-			fprintf(stderr, "fread(): %d, errno=%d\n", r, errno);
+			fprintf(stderr, "fread(): %ld, errno=%d\n", r, errno);
 			return 1;
 		}
 		if (r == 0) {

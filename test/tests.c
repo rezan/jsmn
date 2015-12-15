@@ -140,8 +140,8 @@ int test_string(void) {
 }
 
 int test_partial_string(void) {
-	int i;
-	int r;
+	long i;
+	long r;
 	jsmn_parser p;
 	jsmntok_t tok[5];
 	const char *js = "{\"x\": \"va\\\\ue\", \"y\": \"value y\"}";
@@ -166,8 +166,8 @@ int test_partial_string(void) {
 
 int test_partial_array(void) {
 #ifdef JSMN_STRICT
-	int r;
-	int i;
+	long r;
+	long i;
 	jsmn_parser p;
 	jsmntok_t tok[10];
 	const char *js = "[ 1, true, [123, \"hello\"]]";
@@ -193,8 +193,8 @@ int test_partial_array(void) {
 }
 
 int test_array_nomem(void) {
-	int i;
-	int r;
+	long i;
+	long r;
 	jsmn_parser p;
 	jsmntok_t toksmall[10], toklarge[10];
 	const char *js;
@@ -225,7 +225,7 @@ int test_array_nomem(void) {
 
 int test_unquoted_keys(void) {
 #ifndef JSMN_STRICT
-	int r;
+	long r;
 	jsmn_parser p;
 	jsmntok_t tok[10];
 	const char *js;
@@ -245,7 +245,7 @@ int test_unquoted_keys(void) {
 }
 
 int test_issue_22(void) {
-	int r;
+	long r;
 	jsmn_parser p;
 	jsmntok_t tokens[128];
 	const char *js;
@@ -273,7 +273,7 @@ int test_issue_27(void) {
 
 int test_input_length(void) {
 	const char *js;
-	int r;
+	long r;
 	jsmn_parser p;
 	jsmntok_t tokens[10];
 

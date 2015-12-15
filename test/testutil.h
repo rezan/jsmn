@@ -3,9 +3,9 @@
 
 #include "../jsmn.c"
 
-static int vtokeq(const char *s, jsmntok_t *t, int numtok, va_list ap) {
+static int vtokeq(const char *s, jsmntok_t *t, long numtok, va_list ap) {
 	if (numtok > 0) {
-		int i, start, end, size;
+		long i, start, end, size;
 		int type;
 		char *value;
 
@@ -27,21 +27,21 @@ static int vtokeq(const char *s, jsmntok_t *t, int numtok, va_list ap) {
 				value = NULL;
 			}
 			if (t[i].type != type) {
-				printf("token %d type is %d, not %d\n", i, t[i].type, type);
+				printf("token %ld type is %d, not %d\n", i, t[i].type, type);
 				return 0;
 			}
 			if (start != -1 && end != -1) {
 				if (t[i].start != start) {
-					printf("token %d start is %d, not %d\n", i, t[i].start, start);
+					printf("token %ld start is %ld, not %ld\n", i, t[i].start, start);
 					return 0;
 				}
 				if (t[i].end != end ) {
-					printf("token %d end is %d, not %d\n", i, t[i].end, end);
+					printf("token %ld end is %ld, not %ld\n", i, t[i].end, end);
 					return 0;
 				}
 			}
 			if (size != -1 && t[i].size != size) {
-				printf("token %d size is %d, not %d\n", i, t[i].size, size);
+				printf("token %ld size is %ld, not %ld\n", i, t[i].size, size);
 				return 0;
 			}
 
@@ -49,7 +49,7 @@ static int vtokeq(const char *s, jsmntok_t *t, int numtok, va_list ap) {
 				const char *p = s + t[i].start;
 				if (strlen(value) != t[i].end - t[i].start ||
 						strncmp(p, value, t[i].end - t[i].start) != 0) {
-					printf("token %d value is %.*s, not %s\n", i, t[i].end-t[i].start,
+					printf("token %ld value is %.*s, not %s\n", i, (int)t[i].end-(int)t[i].start,
 							s+t[i].start, value);
 					return 0;
 				}
@@ -59,7 +59,7 @@ static int vtokeq(const char *s, jsmntok_t *t, int numtok, va_list ap) {
 	return 1;
 }
 
-static int tokeq(const char *s, jsmntok_t *tokens, int numtok, ...) {
+static int tokeq(const char *s, jsmntok_t *tokens, long numtok, ...) {
 	int ok;
 	va_list args;
 	va_start(args, numtok);
@@ -68,8 +68,8 @@ static int tokeq(const char *s, jsmntok_t *tokens, int numtok, ...) {
 	return ok;
 }
 
-static int parse(const char *s, int status, int numtok, ...) {
-	int r;
+static int parse(const char *s, int status, long numtok, ...) {
+	long r;
 	int ok = 1;
 	va_list args;
 	jsmn_parser p;
@@ -78,7 +78,7 @@ static int parse(const char *s, int status, int numtok, ...) {
 	jsmn_init(&p);
 	r = jsmn_parse(&p, s, strlen(s), t, numtok);
 	if (r != status) {
-		printf("status is %d, not %d\n", r, status);
+		printf("status is %ld, not %d\n", r, status);
 		return 0;
 	}
 
